@@ -1,5 +1,5 @@
 import { getAllPosts } from "@/src/services/apiServices/posts";
-import type { getAllPostsResponse } from "@/src/services/types/postTypes";
+import type { getAllPostsResponse } from "@/src/utils/types/postTypes";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetAllPostsServiceQuery = () => {

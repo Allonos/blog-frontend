@@ -1,0 +1,37 @@
+import { Settings } from "lucide-react";
+import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
+
+interface IProps {
+  profilePic: string;
+  username: string;
+  email: string;
+  bio: string;
+}
+
+const UserCard = ({ profilePic, username, email, bio }: IProps) => {
+  return (
+    <div className="bg-zinc-900 rounded-xl px-8 pt-8 pb-6 flex gap-8">
+      <img
+        src={profilePic || defaultAvatar}
+        className="w-37.5 h-37.5 rounded-full object-cover border-4 border-zinc-700"
+      />
+      <div className="flex flex-col gap-6">
+        <div className="flex gap-5 items-center">
+          <h1 className="text-[30px] font-bold">{username}</h1>
+          <div className="flex items-center justify-between gap-3 bg-black border border-zinc-800 py-1 px-2 rounded-lg cursor-pointer hover:bg-[#151515] transition-colors duration-200">
+            <Settings width={16} height={16} />
+            <h4>Update Profile</h4>
+          </div>
+        </div>
+
+        <h4 className="text-[16px] text-[#9F9FA9]">{email}</h4>
+
+        <h4 className="text-[16px] text-[#D4D4D8]">
+          {bio || "User does not have anything in bio"}
+        </h4>
+      </div>
+    </div>
+  );
+};
+
+export default UserCard;

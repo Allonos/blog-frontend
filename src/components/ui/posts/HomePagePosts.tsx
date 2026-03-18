@@ -1,11 +1,14 @@
-import { useGetAllPostsServiceQuery } from "@/src/services/react-query/home/query/useGetAllPostsServiceQuery";
 import PostHeader from "@/src/components/ui/headers/PostHeader";
 import PostContent from "@/src/components/ui/posts/components/PostContent";
-import type { postTypes } from "@/src/services/types/postTypes";
+import type { postTypes } from "@/src/utils/types/postTypes";
 
-const HomePagePosts = () => {
-  const { data: postsData, isLoading } = useGetAllPostsServiceQuery();
-  const posts = Array.isArray(postsData) ? postsData : (postsData?.posts ?? []);
+interface IProps {
+  posts: postTypes[];
+  isLoading: boolean;
+}
+
+const HomePagePosts = ({ posts, isLoading }: IProps) => {
+  console.log(posts);
 
   return (
     <div>
@@ -16,6 +19,7 @@ const HomePagePosts = () => {
             className="bg-zinc-900 p-6 rounded-lg w-full mt-4"
           >
             <PostHeader
+              userId={post.author._id}
               profilePic={post.author.profilePic}
               username={post.author.username}
               createdAt={post.createdAt}
