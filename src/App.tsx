@@ -6,9 +6,16 @@ import { Toaster } from "react-hot-toast";
 import HomePage from "./pages/HomePage";
 import { useGetCheckAuthServiceQuery } from "./services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
 import ProfilePage from "./pages/ProfilePage";
+import { useEffect } from "react";
+import { useAuthStore } from "./store/useAuthStore";
 
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
+  const { setAuthUser } = useAuthStore();
+
+  useEffect(() => {
+    setAuthUser(checkAuth ?? null);
+  }, [checkAuth]);
 
   console.log(checkAuth);
 

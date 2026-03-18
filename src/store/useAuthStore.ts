@@ -2,8 +2,10 @@ import { create } from "zustand";
 
 export interface IAuthUser {
   _id: string;
-  fullName: string;
+  username: string;
   email: string;
+  bio: string;
+  profilePic: string;
 }
 
 interface IProps {
