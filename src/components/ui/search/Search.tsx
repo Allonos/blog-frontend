@@ -17,8 +17,6 @@ const Search = () => {
 
   const shouldShowResults = query.trim().length > 0;
 
-  console.log(data);
-
   return (
     <div className="sticky w-87.5 top-25 right-0 bg-zinc-900 p-6 rounded-lg">
       <h2 className="text-[20px] font-semibold pb-4">Search Users</h2>
