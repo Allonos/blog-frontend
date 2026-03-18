@@ -1,4 +1,3 @@
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
 import { HeartIcon, MessageCircle } from "lucide-react";
 import Comment from "@/src/components/ui/comments/Comment";
 
@@ -7,17 +6,22 @@ interface IProps {
   postId: string;
   likes: number;
   comments: [];
+  image: string | null;
 }
 
-const PostContent = ({ description, postId, likes, comments }: IProps) => {
+const PostContent = (
+  { description, postId, image, likes, comments }: IProps,
+) => {
   return (
     <div className="mt-3">
       <p className="text-[#D4D4D8] text-[16px]">{description}</p>
-      <img
-        src={defaultProfilePic}
-        alt={`post ${postId}`}
-        className="h-100 rounded-lg mt-3 object-cover w-full"
-      />
+      {image && (
+        <img
+          src={image}
+          alt={`post ${postId}`}
+          className="max-h-100 rounded-lg mt-3 object-cover w-full"
+        />
+      )}
 
       <div className="mt-4 flex gap-4 pb-3">
         <div className="flex items-center gap-1">

@@ -29,6 +29,7 @@ const HomePagePosts = ({ posts, isLoading }: IProps) => {
               description={post.description}
               postId={post._id}
               likes={post.likes}
+              image={post.image}
               comments={Array.isArray(post.comments) ? post.comments : []}
             />
           </div>

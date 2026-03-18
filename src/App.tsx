@@ -8,6 +8,7 @@ import { useGetCheckAuthServiceQuery } from "./services/react-query/checkAuth/qu
 import ProfilePage from "./pages/ProfilePage";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
+import CreatePage from "./pages/CreatePage";
 
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
@@ -45,6 +46,10 @@ function App() {
         <Route
           path="/profile/:userId"
           element={checkAuth ? <ProfilePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/create-post"
+          element={checkAuth ? <CreatePage /> : <Navigate to="/login" />}
         />
       </Routes>
 

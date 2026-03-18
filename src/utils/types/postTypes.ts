@@ -5,6 +5,7 @@ export interface postTypes {
     _id: string;
   };
   comments: [];
+  image: string | null;
   createdAt: string;
   description: string;
   likes: number;
