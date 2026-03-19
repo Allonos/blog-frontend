@@ -20,6 +20,7 @@ const HomePagePosts = ({ posts, isLoading }: IProps) => {
           >
             <PostHeader
               userId={post.author._id}
+              postId={post._id}
               profilePic={post.author.profilePic}
               username={post.author.username}
               createdAt={post.createdAt}
