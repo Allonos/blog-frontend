@@ -9,6 +9,7 @@ import { useReplyOnCommentServiceMutation } from "@/src/services/react-query/hom
 import { useDeleteCommentServiceMutation } from "@/src/services/react-query/post/mutation/useDeleteCommentServiceMutation";
 import type { replyTypes } from "@/src/utils/types/Reply";
 import { Ellipsis } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 dayjs.extend(relativeTime);
 
@@ -33,20 +34,30 @@ const Comment = ({ comment, postId }: IProps) => {
     setReply("");
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="pt-4">
       <div className="pt-1 flex gap-2">
-        <img
-          src={comment.author.profilePic !== ""
-            ? comment.author.profilePic
-            : defaultProfilePic}
-          alt="profile"
-          className="w-8 h-8 rounded-full border border-zinc-700"
-        />
+        <div
+          className="cursor-pointer"
+          onClick={() => navigate(`/profile/${comment.author._id}`)}
+        >
+          <img
+            src={comment.author.profilePic !== ""
+              ? comment.author.profilePic
+              : defaultProfilePic}
+            alt="profile"
+            className="w-8 h-8 rounded-full border border-zinc-700"
+          />
+        </div>
         <div className="flex flex-col gap-2 bg-[#27272A] w-full rounded-lg p-3">
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <h4 className="text-[14px] font-semibold">
+              <h4
+                className="text-[14px] font-semibold cursor-pointer hover:underline"
+                onClick={() => navigate(`/profile/${comment.author._id}`)}
+              >
                 {comment.author.username}
               </h4>
               {authUser?._id === comment.author._id && (

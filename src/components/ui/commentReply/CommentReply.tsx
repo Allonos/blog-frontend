@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Ellipsis } from "lucide-react";
 import { useAuthStore } from "@/src/store/useAuthStore";
 import { useDeleteReplyServiceMutation } from "@/src/services/react-query/post/mutation/useDeleteReplyServiceMutation";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   reply: replyTypes;
@@ -17,17 +18,27 @@ const CommentReply = ({ reply, postId, commentId }: IProps) => {
   const { authUser } = useAuthStore();
   const { mutate: deleteReply } = useDeleteReplyServiceMutation();
 
+  const navigate = useNavigate();
+
   return (
     <div className="pt-1 flex gap-2">
-      <img
-        src={reply.author.profilePic || defaultProfilePic}
-        alt="profile"
-        className="w-8 h-8 rounded-full border border-zinc-700"
-      />
+      <div
+        className="cursor-pointer"
+        onClick={() => navigate(`/profile/${reply.author._id}`)}
+      >
+        <img
+          src={reply.author.profilePic || defaultProfilePic}
+          alt="profile"
+          className="w-8 h-8 rounded-full border border-zinc-700"
+        />
+      </div>
       <div className="flex flex-col gap-2 bg-[#27272A] w-full rounded-lg p-3">
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <h4 className="text-[14px] font-semibold">
+            <h4
+              className="text-[14px] font-semibold cursor-pointer hover:underline"
+              onClick={() => navigate(`/profile/${reply.author._id}`)}
+            >
               {reply.author.username}
             </h4>
             {authUser?._id === reply.author._id && (
