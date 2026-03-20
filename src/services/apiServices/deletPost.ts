@@ -2,12 +2,9 @@ import api from "../api/api";
 
 interface IProps {
   postId: string;
-  userId: string;
 }
 
-export const deletePost = async ({ postId, userId }: IProps) => {
-  const response = await api.delete(`/post/delete/${postId}`, {
-    data: { userId },
-  });
+export const deletePost = async ({ postId }: IProps) => {
+  const response = await api.delete(`/post/delete/${postId}`);
   return response.data;
 };

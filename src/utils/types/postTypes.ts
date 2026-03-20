@@ -8,7 +8,7 @@ export interface postTypes {
   image: string | null;
   createdAt: string;
   description: string;
-  likes: number;
+  likes: string[];
   updatedAt: string;
   _id: string;
   __v: number;
