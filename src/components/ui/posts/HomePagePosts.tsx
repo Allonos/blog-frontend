@@ -1,6 +1,8 @@
 import PostHeader from "@/src/components/ui/headers/PostHeader";
 import PostContent from "@/src/components/ui/posts/components/PostContent";
 import type { postTypes } from "@/src/utils/types/postTypes";
+import PostFooter from "../footers/PostFooter";
+import { useAuthStore } from "@/src/store/useAuthStore";
 
 interface IProps {
   posts: postTypes[];
@@ -9,6 +11,7 @@ interface IProps {
 
 const HomePagePosts = ({ posts, isLoading }: IProps) => {
   console.log(posts);
+  const { authUser } = useAuthStore();
 
   return (
     <div>
@@ -33,6 +36,8 @@ const HomePagePosts = ({ posts, isLoading }: IProps) => {
               image={post.image}
               comments={Array.isArray(post.comments) ? post.comments : []}
             />
+
+            {authUser && <PostFooter postId={post._id} />}
           </div>
         ))}
       </div>
