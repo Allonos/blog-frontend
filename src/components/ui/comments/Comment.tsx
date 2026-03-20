@@ -1,15 +1,15 @@
 import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
-import CommentReply from "../commentReply/CommentReply";
+
 import type { commentType } from "@/src/utils/types/postTypes";
 import { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useAuthStore } from "@/src/store/useAuthStore";
-import { useReplyOnCommentServiceMutation } from "@/src/services/react-query/home/mutation/useReplyOnCommentServiceMutation";
 import { useDeleteCommentServiceMutation } from "@/src/services/react-query/post/mutation/useDeleteCommentServiceMutation";
-import type { replyTypes } from "@/src/utils/types/Reply";
+
 import { Ellipsis } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ReplyInput from "../commentReply/ReplyInput";
 
 dayjs.extend(relativeTime);
 
@@ -20,19 +20,12 @@ interface IProps {
 
 const Comment = ({ comment, postId }: IProps) => {
   const [showReply, setShowReply] = useState(false);
-  const [reply, setReply] = useState("");
+
   const [showMenu, setShowMenu] = useState(false);
 
   const { authUser } = useAuthStore();
 
-  const { mutate: replyOnComment } = useReplyOnCommentServiceMutation();
   const { mutate: deleteComment } = useDeleteCommentServiceMutation();
-
-  const handleReply = () => {
-    setReply(reply);
-    replyOnComment({ postId, commentId: comment._id, reply });
-    setReply("");
-  };
 
   const navigate = useNavigate();
 
@@ -102,49 +95,7 @@ const Comment = ({ comment, postId }: IProps) => {
         </div>
       </div>
 
-      {showReply && (
-        <div className="pl-10 pt-2">
-          {comment.replies.map((reply: replyTypes) => (
-            <CommentReply
-              key={reply._id}
-              reply={reply}
-              postId={postId}
-              commentId={comment._id}
-            />
-          ))}
-          <div className="flex gap-2 items-center mt-4">
-            <img
-              src={authUser?.profilePic || defaultProfilePic}
-              className="w-6 h-6 rounded-full border border-zinc-700"
-              alt="profile pic"
-            />
-            <div className="flex items-center gap-2 flex-1 ml-2">
-              <div className="flex-1">
-                <textarea
-                  placeholder="Write a reply..."
-                  rows={1}
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                  onInput={(e) => {
-                    const el = e.currentTarget;
-                    el.style.height = "auto";
-                    el.style.height = el.scrollHeight + "px";
-                  }}
-                  className="w-full bg-zinc-800 text-white placeholder:text-zinc-500 border border-zinc-700 rounded-md px-2 py-1 resize-none overflow-hidden"
-                />
-              </div>
-              <div>
-                <button
-                  className="bg-blue-500 text-white px-2 py-1 text-[14px] rounded-md cursor-pointer hover:bg-blue-600 transition-colors duration-200"
-                  onClick={handleReply}
-                >
-                  Reply
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {showReply && <ReplyInput postId={postId} comment={comment} />}
     </div>
   );
 };
