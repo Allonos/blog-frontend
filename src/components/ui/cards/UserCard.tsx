@@ -30,13 +30,13 @@ const UserCard = ({ profilePic, username, email, bio }: IProps) => {
 
   return (
     <>
-      <div className="bg-zinc-900 rounded-xl px-8 pt-8 pb-6 flex gap-8">
+      <div className="bg-zinc-900 rounded-xl px-8 pt-8 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-8">
         <img
           src={profilePic || defaultAvatar}
           className="w-37.5 h-37.5 rounded-full object-cover border-4 border-zinc-700"
         />
         <div className="flex flex-col gap-6">
-          <div className="flex gap-5 items-center">
+          <div className="flex flex-col sm:flex-row gap-5 items-center">
             <h1 className="text-[30px] font-bold">{username}</h1>
             <div
               onClick={openModal}
@@ -47,9 +47,11 @@ const UserCard = ({ profilePic, username, email, bio }: IProps) => {
             </div>
           </div>
 
-          <h4 className="text-[16px] text-[#9F9FA9]">{email}</h4>
+          <h4 className="text-[16px] text-[#9F9FA9] text-center sm:text-start">
+            {email}
+          </h4>
 
-          <h4 className="text-[16px] text-[#D4D4D8]">
+          <h4 className="text-[16px] text-[#D4D4D8] text-center sm:text-start">
             {bio || "User does not have anything in bio"}
           </h4>
         </div>

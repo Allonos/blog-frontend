@@ -62,7 +62,7 @@ const Comment = ({ comment, postId }: IProps) => {
                     <Ellipsis size={16} />
                   </button>
                   {showMenu && (
-                    <div className="absolute right-0 top-6 bg-zinc-900 border border-zinc-700 rounded-md shadow-lg z-10 min-w-[140px]">
+                    <div className="absolute right-0 top-6 bg-zinc-900 border border-zinc-700 rounded-md shadow-lg z-10 min-w-35">
                       <button
                         className="px-4 py-2 text-[13px] text-red-400 hover:bg-zinc-700 w-full text-left rounded-md cursor-pointer"
                         onClick={() => {

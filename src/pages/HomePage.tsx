@@ -10,11 +10,12 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="flex justify-between gap-6">
+        {/* HERE SHOULD BE AN INPUT AND SEARCH ICON */}
         <div className="py-8 min-h-screen flex-1 min-w-0">
           <h2 className="text-[30px] font-bold">Latest Posts</h2>
           <HomePagePosts posts={posts} isLoading={isLoading} />
         </div>
-        <div className="shrink-0">
+        <div className="shrink-0 hidden lg:block">
           <Search />
         </div>
       </div>
