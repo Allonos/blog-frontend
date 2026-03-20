@@ -71,7 +71,7 @@ const PostContent = (
       {comments.length > 0 && (
         <div>
           {visibleComments.map((comment) => (
-            <Comment key={comment._id} comment={comment} />
+            <Comment postId={postId} key={comment._id} comment={comment} />
           ))}
           {comments.length > COMMENTS_LIMIT && (
             <button

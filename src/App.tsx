@@ -18,8 +18,6 @@ function App() {
     setAuthUser(checkAuth ?? null);
   }, [checkAuth]);
 
-  console.log(checkAuth);
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">

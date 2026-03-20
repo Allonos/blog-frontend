@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const HomePagePosts = ({ posts, isLoading }: IProps) => {
-  console.log(posts);
   const { authUser } = useAuthStore();
 
   return (

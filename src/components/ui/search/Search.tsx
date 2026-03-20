@@ -4,6 +4,7 @@ import {
   type SearchedUser,
   useGetUserServiceQuery,
 } from "@/src/services/react-query/search/query/useGetUserServiceQuery";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -16,6 +17,8 @@ const Search = () => {
   const users: SearchedUser[] = data ?? [];
 
   const shouldShowResults = query.trim().length > 0;
+
+  const navigate = useNavigate();
 
   return (
     <div className="sticky w-87.5 top-25 right-0 bg-zinc-900 p-6 rounded-lg">
@@ -43,7 +46,8 @@ const Search = () => {
           {users.map((user: SearchedUser) => (
             <div
               key={user._id}
-              className="flex items-center gap-3 p-2 rounded-md bg-zinc-800"
+              onClick={() => navigate(`/profile/${user._id}`)}
+              className="flex items-center gap-3 p-2 rounded-md bg-zinc-800 cursor-pointer hover:bg-zinc-700 transition-colors duration-150"
             >
               <img
                 src={user.profilePic || defaultProfilePic}

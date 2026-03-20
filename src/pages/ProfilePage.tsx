@@ -12,8 +12,6 @@ const ProfilePage = () => {
     userId as string,
   );
 
-  console.log(userPosts);
-
   return (
     <ProfileLayout>
       <section className="mt-8">
