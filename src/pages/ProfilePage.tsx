@@ -4,6 +4,7 @@ import { useGetUserPostsServiceQuery } from "@/src/services/react-query/usersPos
 import UserCard from "@/src/components/ui/cards/UserCard";
 import HomePagePosts from "../components/ui/posts/HomePagePosts";
 import ProfileLayout from "../components/ui/layout/ProfileLayout";
+import ProfilePageSkeleton from "../components/ui/skeletons/ProfilePageSkeleton";
 
 const ProfilePage = () => {
   const { userId } = useParams();
@@ -11,6 +12,14 @@ const ProfilePage = () => {
   const { data: userPosts, isLoading } = useGetUserPostsServiceQuery(
     userId as string,
   );
+
+  if (isLoading) {
+    return (
+      <ProfileLayout>
+        <ProfilePageSkeleton />
+      </ProfileLayout>
+    );
+  }
 
   return (
     <ProfileLayout>
