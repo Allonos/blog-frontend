@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     setAuthUser(checkAuth ?? null);
-  }, [checkAuth]);
+  }, [checkAuth, setAuthUser]);
 
   if (isLoading) {
     return (

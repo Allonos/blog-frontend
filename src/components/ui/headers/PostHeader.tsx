@@ -86,7 +86,9 @@ const PostHeader = (
               onClick={handleDeletePost}
               className="absolute w-30 bg-zinc-800 z-10 right-0 px-3 py-1 text-center cursor-pointer rounded-md hover:bg-zinc-700 transition-colors duration-200 "
             >
-              <h4 className="font-semibold text-[14px]">Delete Post</h4>
+              <h4 className="font-semibold text-[14px] text-red-500">
+                Delete Post
+              </h4>
             </div>
           )}
         </div>
