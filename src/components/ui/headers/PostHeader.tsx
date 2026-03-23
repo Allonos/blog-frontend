@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 dayjs.extend(relativeTime);
@@ -52,7 +53,9 @@ const PostHeader = (
   const { mutate: deletePost } = useDeletePostServiceMutation();
 
   const handleDeletePost = () => {
-    deletePost({ postId, userId });
+    deletePost({ postId }, {
+      onSuccess: () => toast.success("Post deleted successfully!"),
+    });
   };
 
   return (

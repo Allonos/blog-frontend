@@ -1,11 +1,13 @@
 import { getAllPosts } from "@/src/services/apiServices/posts";
 import type { getAllPostsResponse } from "@/src/utils/types/postTypes";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const useGetAllPostsServiceQuery = () => {
-  return useQuery<getAllPostsResponse>({
+  return useInfiniteQuery<getAllPostsResponse>({
     queryKey: ["get-all-posts"],
-    queryFn: () => getAllPosts(),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    queryFn: ({ pageParam }) => getAllPosts(pageParam as string | undefined),
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    initialPageParam: undefined,
+    staleTime: 1000 * 60 * 5,
   });
 };

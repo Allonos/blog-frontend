@@ -15,6 +15,7 @@ export const useCreatePostServiceMutation = () => {
       createPost({ id, description, image }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-all-posts"] });
+      queryClient.invalidateQueries({ queryKey: ["get-user-posts"] });
     },
   });
 };

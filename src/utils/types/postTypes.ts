@@ -26,8 +26,8 @@ export interface postTypes {
   __v: number;
 }
 
-export type getAllPostsResponse =
-  | {
-      posts: postTypes[];
-    }
-  | postTypes[];
+export interface getAllPostsResponse {
+  posts: postTypes[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+}

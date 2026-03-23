@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
 import UpdateProfileModal from "../modals/UpdateProfileModal";
+import { useAuthStore } from "@/src/store/useAuthStore";
 
 interface IProps {
+  userId: string;
   profilePic: string;
   username: string;
   email: string;
   bio: string;
 }
 
-const UserCard = ({ profilePic, username, email, bio }: IProps) => {
+const UserCard = ({ profilePic, username, email, bio, userId }: IProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const { authUser } = useAuthStore();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,13 +41,17 @@ const UserCard = ({ profilePic, username, email, bio }: IProps) => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row gap-5 items-center">
             <h1 className="text-[30px] font-bold">{username}</h1>
-            <div
-              onClick={openModal}
-              className="flex items-center justify-between gap-3 bg-black border border-zinc-800 py-1 px-2 rounded-lg cursor-pointer hover:bg-[#151515] transition-colors duration-200"
-            >
-              <Settings width={16} height={16} />
-              <h4>Update Profile</h4>
-            </div>
+            {authUser?._id === userId && (
+              (
+                <div
+                  onClick={openModal}
+                  className="flex items-center justify-between gap-3 bg-black border border-zinc-800 py-1 px-2 rounded-lg cursor-pointer hover:bg-[#151515] transition-colors duration-200"
+                >
+                  <Settings width={16} height={16} />
+                  <h4>Update Profile</h4>
+                </div>
+              )
+            )}
           </div>
 
           <h4 className="text-[16px] text-[#9F9FA9] text-center sm:text-start">

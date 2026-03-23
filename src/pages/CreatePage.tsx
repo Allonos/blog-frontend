@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useCreatePostServiceMutation } from "@/src/services/react-query/createPost/mutation/useCreatePostServiceMutation";
 import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreatePage = () => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
@@ -40,6 +41,7 @@ const CreatePage = () => {
           setDescription("");
           setSelectedImg(null);
           if (fileInputRef.current) fileInputRef.current.value = "";
+          toast.success("Post created successfully!");
           navigate("/");
         },
       },
