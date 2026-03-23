@@ -10,10 +10,10 @@ import {
 export const useGetUserPostsServiceQuery = (userId: string) => {
   return useInfiniteQuery<userPostsTypesResponse>({
     queryKey: ["get-user-posts", userId],
-    queryFn: ({ pageParam }) =>
-      getUserPosts(userId, pageParam as string | undefined),
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    initialPageParam: undefined,
+    queryFn: ({ pageParam }) => getUserPosts(userId, pageParam as number),
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNextPage ? lastPage.page + 1 : undefined,
+    initialPageParam: 1,
     staleTime: 1000 * 60 * 5,
   });
 };

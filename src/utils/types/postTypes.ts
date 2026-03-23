@@ -28,6 +28,9 @@ export interface postTypes {
 
 export interface getAllPostsResponse {
   posts: postTypes[];
-  nextCursor: string | null;
+  page: number;
+  totalPages: number;
   hasNextPage: boolean;
+  isFirstPage: boolean;
+  isLastPage: boolean;
 }

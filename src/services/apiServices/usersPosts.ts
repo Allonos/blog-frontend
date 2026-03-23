@@ -3,10 +3,10 @@ import type { userPostsTypesResponse } from "@/src/utils/types/userPostsTypes";
 
 export const getUserPosts = async (
   userId: string,
-  cursor?: string,
+  page: number = 1,
 ): Promise<userPostsTypesResponse> => {
   const response = await api.get(`/post/get-posts-by-user/${userId}`, {
-    params: { cursor, limit: 10 },
+    params: { page, limit: 10 },
   });
   return response.data;
 };

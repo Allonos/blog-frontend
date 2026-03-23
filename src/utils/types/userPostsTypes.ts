@@ -6,6 +6,9 @@ export interface userPostsTypesResponse {
   profilePic: string;
   bio: string;
   posts: postTypes[];
-  nextCursor: string | null;
+  page: number;
+  totalPages: number;
   hasNextPage: boolean;
+  isFirstPage: boolean;
+  isLastPage: boolean;
 }
