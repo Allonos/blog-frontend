@@ -7,5 +7,6 @@ export const useGetCheckAuthServiceQuery = () => {
     queryKey: ["checkAuth"],
     queryFn: () => getCheckAuth(),
     staleTime: 5 * 60 * 1000,
+    retry: false,
   });
 };

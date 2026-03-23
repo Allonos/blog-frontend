@@ -2,6 +2,7 @@ import { Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useUpdateProfileServiceMutation } from "@/src/services/react-query/updateProfile/mutation/useUpdateProfileServiceMutation";
 import { useAuthStore } from "@/src/store/useAuthStore";
+import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
 
 interface IProps {
   isVisible: boolean;
@@ -94,7 +95,7 @@ const UpdateProfileModal = ({
             onClick={() => fileInputRef.current?.click()}
           >
             <img
-              src={selectedImg}
+              src={selectedImg || defaultProfilePic}
               className="w-20 h-20 rounded-full object-cover border-2 border-zinc-700"
             />
             <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">

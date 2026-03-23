@@ -1,8 +1,9 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useSearchParams } from "react-router-dom";
 import "./App.css";
 import SignupPage from "@/src/pages/SignupPage";
 import LoginPage from "@/src/pages/LoginPage";
 import { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import HomePage from "./pages/HomePage";
 import { useGetCheckAuthServiceQuery } from "./services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
 import ProfilePage from "./pages/ProfilePage";
@@ -13,10 +14,18 @@ import CreatePage from "./pages/CreatePage";
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
   const { setAuthUser } = useAuthStore();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setAuthUser(checkAuth ?? null);
   }, [checkAuth, setAuthUser]);
+
+  useEffect(() => {
+    if (searchParams.get("error") === "google_auth_failed") {
+      toast.error("Google sign in failed. Please try again.");
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   if (isLoading) {
     return (
