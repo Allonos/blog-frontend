@@ -4,12 +4,12 @@ import SignupPage from "@/src/pages/SignupPage";
 import LoginPage from "@/src/pages/LoginPage";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
-import HomePage from "./pages/HomePage";
-import { useGetCheckAuthServiceQuery } from "./services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
-import ProfilePage from "./pages/ProfilePage";
+import HomePage from "@/src/pages/HomePage";
+import { useGetCheckAuthServiceQuery } from "@/src/services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
+import ProfilePage from "@/src/pages/ProfilePage";
 import { useEffect } from "react";
-import { useAuthStore } from "./store/useAuthStore";
-import CreatePage from "./pages/CreatePage";
+import { useAuthStore } from "@/src/store/useAuthStore";
+import CreatePage from "@/src/pages/CreatePage";
 import MessagesPage from "@/src/pages/MessagesPage";
 
 function App() {
@@ -61,6 +61,10 @@ function App() {
         />
         <Route
           path="/messages"
+          element={checkAuth ? <MessagesPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/messages/:userId"
           element={checkAuth ? <MessagesPage /> : <Navigate to="/login" />}
         />
       </Routes>

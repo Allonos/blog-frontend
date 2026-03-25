@@ -1,4 +1,4 @@
-import api from "../api/api";
+import api from "@/src/services/api/api";
 
 export const getSearchedUsers = async (query: string) => {
   const response = await api.get(

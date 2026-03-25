@@ -1,4 +1,4 @@
-import api from "../api/api";
+import api from "@/src/services/api/api";
 
 interface IProps {
   email: string;

@@ -1,5 +1,5 @@
 import api from "@/src/services/api/api";
-import type { getAllPostsResponse } from "../../utils/types/postTypes";
+import type { getAllPostsResponse } from "@/src/utils/types/postTypes";
 
 export const getAllPosts = async (
   page: number = 1,

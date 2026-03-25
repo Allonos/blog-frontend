@@ -2,6 +2,7 @@ import defaultImage from "@/public/assets/jpg/avatar.jpg";
 import { useAllUsersChatServiceQuery } from "@/src/services/react-query/chat/query/useAllUsersChatServiceQuery";
 import type { checkUserTypes } from "@/src/utils/types/checkUserTypes";
 import ChatSkeletons from "@/src/components/ui/skeletons/ChatSkeleton";
+import { Link } from "react-router-dom";
 
 const UsersChatList = () => {
   const { data: users, isLoading } = useAllUsersChatServiceQuery();
@@ -21,14 +22,16 @@ const UsersChatList = () => {
           key={user._id}
           className={`py-2 px-6 flex gap-2 items-center border-b ${
             index === lastItem ? "border-b-0" : ""
-          } border-zinc-800 hover:bg-zinc-800 cursor-pointer transition-colors duration-200`}
+          } border-zinc-800 hover:bg-zinc-800 transition-colors duration-200`}
         >
-          <img
-            src={user.profilePic || defaultImage}
-            alt="avatar"
-            className="w-12 h-12 rounded-full"
-          />
-          <h3>{user.username}</h3>
+          <Link to={`/messages/${user._id}`} className="flex gap-2 items-center cursor-pointer">
+            <img
+              src={user.profilePic || defaultImage}
+              alt="avatar"
+              className="w-12 h-12 rounded-full"
+            />
+            <h3>{user.username}</h3>
+          </Link>
         </div>
       ))}
     </>

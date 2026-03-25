@@ -2,6 +2,7 @@ import defaultImage from "@/public/assets/jpg/avatar.jpg";
 import { useGetUsersContactsServiceQuery } from "@/src/services/react-query/chat/query/useUserContactsServiceQuery";
 import type { checkUserTypes } from "@/src/utils/types/checkUserTypes";
 import ChatSkeletons from "@/src/components/ui/skeletons/ChatSkeleton";
+import { Link } from "react-router-dom";
 
 const ContactsList = () => {
   const { data: contacts, isLoading } = useGetUsersContactsServiceQuery();
@@ -15,7 +16,8 @@ const ContactsList = () => {
   return (
     <>
       {contacts.map((contact: checkUserTypes, index: number) => (
-        <div
+        <Link
+          to={`/messages/${contact._id}`}
           key={contact._id}
           className={`py-2 px-6 flex gap-2 items-center border-b ${
             index === lastItem ? "border-b-0" : ""
@@ -27,7 +29,7 @@ const ContactsList = () => {
             className="w-12 h-12 rounded-full"
           />
           <h3>{contact.username}</h3>
-        </div>
+        </Link>
       ))}
       {contacts.length === 0 && (
         <div className="py-4 px-6 text-center text-zinc-500">
