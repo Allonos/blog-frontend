@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
 import CreatePage from "./pages/CreatePage";
+import MessagesPage from "@/src/pages/MessagesPage";
 
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
@@ -57,6 +58,10 @@ function App() {
         <Route
           path="/create-post"
           element={checkAuth ? <CreatePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/messages"
+          element={checkAuth ? <MessagesPage /> : <Navigate to="/login" />}
         />
       </Routes>
 

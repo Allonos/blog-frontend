@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetCheckAuthServiceQuery } from "@/src/services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
-import { LogOutIcon, Search, SquarePen } from "lucide-react";
+import { LogOutIcon, MessagesSquare, Search, SquarePen } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
 import { useLogoutServiceMutation } from "@/src/services/react-query/logout/mutation/useLogoutServiceMutation";
@@ -60,6 +60,15 @@ const MainHeader = () => {
               <SquarePen width={16} height={16} />
               <h3 className="text-[14px] text-[#9F9FA9] hidden sm:block">
                 Create
+              </h3>
+            </Link>
+            <Link
+              to="/messages"
+              className="flex gap-2 items-center hover:bg-zinc-800 px-2.5 py-1 rounded-lg transition-colors duration-200"
+            >
+              <MessagesSquare width={16} height={16} />
+              <h3 className="text-[14px] text-[#9F9FA9] hidden sm:block">
+                Messages
               </h3>
             </Link>
             <Link

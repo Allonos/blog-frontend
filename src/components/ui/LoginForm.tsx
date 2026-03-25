@@ -15,7 +15,7 @@ interface IProps {
 
 const LoginForm = ({ onSubmit, formData, onChange, isPending }: IProps) => {
   return (
-    <section className="flex flex-col h-screen bg-zinc-950 w-full items-center justify-center">
+    <section className="flex flex-col h-screen  w-full items-center justify-center">
       <div className="bg-zinc-900 w-75 sm:w-125 rounded-2xl p-6">
         <h1 className="text-[30px] text-center font-medium">Welcome Back</h1>
         <p className="text-center text-[#9F9FA9]">
