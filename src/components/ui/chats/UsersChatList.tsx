@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 const UsersChatList = () => {
   const { data: users, isLoading } = useAllUsersChatServiceQuery();
 
-  console.log(users);
-
   if (isLoading) {
     return <ChatSkeletons />;
   }
@@ -24,7 +22,10 @@ const UsersChatList = () => {
             index === lastItem ? "border-b-0" : ""
           } border-zinc-800 hover:bg-zinc-800 transition-colors duration-200`}
         >
-          <Link to={`/messages/${user._id}`} className="flex gap-2 items-center cursor-pointer">
+          <Link
+            to={`/messages/${user._id}`}
+            className="flex gap-2 items-center cursor-pointer"
+          >
             <img
               src={user.profilePic || defaultImage}
               alt="avatar"

@@ -18,9 +18,12 @@ const formatCreatedAt = (createdAt: string) => {
     "day",
   );
 
-  if (daysDifference === 1) {
-    return "yesterday";
+  if (daysDifference === 1) return "yesterday";
+  if (daysDifference >= 2 && daysDifference < 7) {
+    return `${daysDifference} days ago`;
   }
+  if (daysDifference === 7) return "1 week ago";
+  if (daysDifference > 7) return createdDate.format("DD/MM/YYYY");
 
   return createdDate.fromNow();
 };

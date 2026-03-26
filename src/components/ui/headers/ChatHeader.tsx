@@ -1,4 +1,5 @@
 import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface IProps {
@@ -9,10 +10,13 @@ interface IProps {
 
 const ChatHeader = ({ recieverId, recieverImg, recieverUsername }: IProps) => {
   return (
-    <div className="border-b border-zinc-800 p-2 flex items-center gap-2">
+    <div className="border-b border-zinc-800 p-2 flex items-center gap-4">
+      <Link to={`/messages`}>
+        <ArrowLeft width={20} />
+      </Link>
       <Link
         to={`/profile/${recieverId}`}
-        className="flex items-center gap-4 cursor-pointer"
+        className="flex items-center gap-2 cursor-pointer"
       >
         <img
           src={recieverImg || defaultAvatar}

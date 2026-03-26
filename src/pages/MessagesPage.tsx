@@ -12,11 +12,14 @@ import { useAllUsersChatServiceQuery } from "@/src/services/react-query/chat/que
 import type { checkUserTypes } from "@/src/utils/types/checkUserTypes";
 import MessageBubblesSkeleton from "@/src/components/ui/skeletons/MessageBubbleSkeleton";
 import type { MessageType } from "@/src/utils/types/messageTypes";
+import { useListenMessages } from "@/src/hooks/useListenMessages";
 
 const MessagesPage = () => {
   const { userId } = useParams();
   const { authUser } = useAuthStore();
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  useListenMessages(userId || "");
 
   const { data: messages, isLoading } = useGetUsersChatMessageQuery({
     id: userId || "",
@@ -24,6 +27,9 @@ const MessagesPage = () => {
 
   const { data: users, isLoading: isUsersLoading } =
     useAllUsersChatServiceQuery();
+
+  const otherUser = !isUsersLoading &&
+    users?.find((user: checkUserTypes) => user._id === userId);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView();
@@ -41,16 +47,9 @@ const MessagesPage = () => {
           ? (
             <div className="flex-1 flex flex-col overflow-hidden">
               <ChatHeader
-                recieverId={!isUsersLoading &&
-                    users.find((user: checkUserTypes) => user._id === userId)
-                      ?._id ||
-                  ""}
-                recieverImg={!isUsersLoading &&
-                  users.find((user: checkUserTypes) => user._id === userId)
-                    ?.profilePic}
-                recieverUsername={!isUsersLoading &&
-                  users.find((user: checkUserTypes) => user._id === userId)
-                    ?.username}
+                recieverId={otherUser?._id || ""}
+                recieverImg={otherUser?.profilePic}
+                recieverUsername={otherUser?.username}
               />
               <div className="flex-1 overflow-y-auto">
                 {messages?.map((message: MessageType) => (
@@ -60,7 +59,7 @@ const MessagesPage = () => {
                     isMyMessage={message.senderId === authUser?._id}
                     profilePic={message.senderId === authUser?._id
                       ? authUser?.profilePic ?? ""
-                      : message.recieverId?.profilePic ?? ""}
+                      : otherUser?.profilePic ?? ""}
                   />
                 ))}
                 {messages.length === 0 && (

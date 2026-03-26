@@ -9,17 +9,24 @@ import { useGetCheckAuthServiceQuery } from "@/src/services/react-query/checkAut
 import ProfilePage from "@/src/pages/ProfilePage";
 import { useEffect } from "react";
 import { useAuthStore } from "@/src/store/useAuthStore";
+import { useSocketStore } from "@/src/store/useSocketStore";
 import CreatePage from "@/src/pages/CreatePage";
 import MessagesPage from "@/src/pages/MessagesPage";
 
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
   const { setAuthUser } = useAuthStore();
+  const { connectSocket, disconnectSocket } = useSocketStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setAuthUser(checkAuth ?? null);
-  }, [checkAuth, setAuthUser]);
+    if (checkAuth) {
+      connectSocket();
+    } else {
+      disconnectSocket();
+    }
+  }, [checkAuth, setAuthUser, connectSocket, disconnectSocket]);
 
   useEffect(() => {
     if (searchParams.get("error") === "google_auth_failed") {
