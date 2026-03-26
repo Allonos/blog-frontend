@@ -59,7 +59,7 @@ const CreatePage = () => {
   return (
     <ProfileLayout>
       <section className="mt-10 bg-zinc-900 p-6 rounded-xl">
-        <h1 className="text-[24px] font-semibold">Create a New Post</h1>
+        <h2 className="text-[24px] font-semibold">Create a New Post</h2>
 
         <div className="mt-8">
           <p className="text-[14px] text-[#D4D4D8]">What's on your mind?</p>

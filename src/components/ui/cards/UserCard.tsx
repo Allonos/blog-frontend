@@ -51,7 +51,7 @@ const UserCard = ({ profilePic, username, email, bio, userId }: IProps) => {
         />
         <div className="flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row gap-5 items-center">
-            <h1 className="text-[30px] font-bold">{username}</h1>
+            <h2 className="text-[30px] font-bold">{username}</h2>
             <div
               onClick={handleClick}
               className="flex items-center justify-between gap-3 bg-black border border-zinc-800 py-1 px-2 rounded-lg cursor-pointer hover:bg-[#151515] transition-colors duration-200"

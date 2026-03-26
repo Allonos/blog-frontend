@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
@@ -12,15 +12,40 @@ const DURATION = 200;
 const SearchModal = ({ onClose }: { onClose: () => void }) => {
   const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
-  const { data, isLoading } = useGetUserServiceQuery(query);
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetUserServiceQuery(query);
   const navigate = useNavigate();
-  const users: SearchedUser[] = data ?? [];
+  const users: SearchedUser[] = data?.pages?.flatMap((page) => page.users) ??
+    [];
   const shouldShowResults = query.trim().length > 0;
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 10);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const handleClose = () => {
     setVisible(false);
@@ -76,7 +101,7 @@ const SearchModal = ({ onClose }: { onClose: () => void }) => {
         )}
 
         {!isLoading && shouldShowResults && (
-          <div className="mt-4 space-y-3 max-h-54 overflow-y-auto p-2 rounded-lg bg-zinc-950 no-scrollbar">
+          <div className="mt-4 space-y-3 max-h-80 overflow-y-auto p-2 rounded-lg bg-zinc-950 no-scrollbar">
             {users.map((user: SearchedUser) => (
               <div
                 key={user._id}
@@ -92,6 +117,32 @@ const SearchModal = ({ onClose }: { onClose: () => void }) => {
                   <p className="text-[14px] text-white truncate">
                     {user.username}
                   </p>
+                </div>
+              </div>
+            ))}
+            {isFetchingNextPage && (
+              <div className="flex items-center gap-3 p-2 rounded-md bg-zinc-800 animate-pulse">
+                <div className="w-9 h-9 rounded-full bg-zinc-700" />
+                <div className="flex-1 space-y-2 py-1">
+                  <div className="h-4 bg-zinc-700 rounded w-3/4" />
+                  <div className="h-4 bg-zinc-700 rounded w-1/2" />
+                </div>
+              </div>
+            )}
+            <div ref={sentinelRef} />
+          </div>
+        )}
+        {isLoading && (
+          <div className="pt-4 space-y-3 max-h-80 overflow-y-auto pr-1 no-scrollbar">
+            {[...Array(5)].map((_, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-3 p-2 rounded-md bg-zinc-800 animate-pulse"
+              >
+                <div className="w-9 h-9 rounded-full bg-zinc-700" />
+                <div className="flex-1 space-y-2 py-1">
+                  <div className="h-4 bg-zinc-700 rounded w-3/4" />
+                  <div className="h-4 bg-zinc-700 rounded w-1/2" />
                 </div>
               </div>
             ))}
