@@ -16,24 +16,20 @@ const UsersChatList = () => {
   return (
     <>
       {users.map((user: checkUserTypes, index: number) => (
-        <div
+        <Link
+          to={`/messages/${user._id}`}
           key={user._id}
           className={`py-2 px-6 flex gap-2 items-center border-b ${
             index === lastItem ? "border-b-0" : ""
           } border-zinc-800 hover:bg-zinc-800 transition-colors duration-200`}
         >
-          <Link
-            to={`/messages/${user._id}`}
-            className="flex gap-2 items-center cursor-pointer"
-          >
-            <img
-              src={user.profilePic || defaultImage}
-              alt="avatar"
-              className="w-12 h-12 rounded-full"
-            />
-            <h3>{user.username}</h3>
-          </Link>
-        </div>
+          <img
+            src={user.profilePic || defaultImage}
+            alt="avatar"
+            className="w-12 h-12 rounded-full"
+          />
+          <h3>{user.username}</h3>
+        </Link>
       ))}
     </>
   );

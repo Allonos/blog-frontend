@@ -42,7 +42,13 @@ const MessagesPage = () => {
   return (
     <ChatLayout>
       <div className="flex h-full">
-        <ChatSidebar />
+        <div
+          className={userId
+            ? "hidden md:block md:max-w-75"
+            : "w-full md:max-w-75"}
+        >
+          <ChatSidebar />
+        </div>
         {userId
           ? (
             <div className="flex-1 flex flex-col overflow-hidden">
@@ -73,13 +79,14 @@ const MessagesPage = () => {
                     </p>
                   </div>
                 )}
+                <div className="w-full h-5" />
                 <div ref={bottomRef} />
               </div>
               <ChatInput />
             </div>
           )
           : (
-            <div className="flex-1 flex flex-col items-center justify-center gap-3">
+            <div className="hidden md:flex flex-1 flex-col items-center justify-center gap-3">
               <MessageCircle size={48} className="text-zinc-500" />
               <p className="text-lg font-semibold text-zinc-300">
                 Select a conversation

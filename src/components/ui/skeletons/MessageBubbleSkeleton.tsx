@@ -36,7 +36,9 @@ const MessageBubblesSkeleton = () => {
   return (
     <ChatLayout>
       <div className="flex h-full">
-        <ChatSidebar />
+        <div className="hidden md:block">
+          <ChatSidebar />
+        </div>
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="flex-1 overflow-y-auto">

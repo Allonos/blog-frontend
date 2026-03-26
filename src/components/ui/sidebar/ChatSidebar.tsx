@@ -17,7 +17,7 @@ const ChatSidebar = () => {
   };
 
   return (
-    <div className="border-r border-zinc-800 min-w-75">
+    <div className="border-r border-zinc-800 md:max-w-75 h-full">
       <div className="pt-2 border-b border-zinc-800">
         <h2 className="text-[24px] font-bold py-2 px-6">Messages</h2>
         <div className="relative flex w-full">
