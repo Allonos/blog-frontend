@@ -42,7 +42,7 @@ const Search = () => {
       )}
 
       {!isLoading && (
-        <div className="pt-4 space-y-3 max-h-54 overflow-y-auto pr-1">
+        <div className="pt-4 space-y-3 max-h-54 overflow-y-auto pr-1 no-scrollbar">
           {users.map((user: SearchedUser) => (
             <div
               key={user._id}

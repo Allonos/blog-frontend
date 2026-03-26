@@ -10,3 +10,12 @@ export interface MessageType {
   image?: string;
   createdAt: string;
 }
+
+export interface MessagePageResponse {
+  messages: MessageType[];
+  page: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+}

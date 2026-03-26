@@ -1,10 +1,13 @@
 import { getUserContacts } from "@/src/services/apiServices/userContacts";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const useGetUsersContactsServiceQuery = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["contacts"],
-    queryFn: () => getUserContacts(),
+    queryFn: ({ pageParam }) => getUserContacts({ page: pageParam as number }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNextPage ? lastPage.page + 1 : undefined,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };

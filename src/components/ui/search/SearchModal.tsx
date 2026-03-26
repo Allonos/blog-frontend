@@ -34,12 +34,16 @@ const SearchModal = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-start justify-center pt-20 transition-opacity duration-200 ${visible ? "opacity-100" : "opacity-0"}`}
+      className={`fixed inset-0 z-50 flex items-start justify-center pt-20 transition-opacity duration-200 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
       style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
       onClick={handleClose}
     >
       <div
-        className={`bg-zinc-900 rounded-lg p-6 w-full max-w-md mx-4 transition-all duration-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}`}
+        className={`bg-zinc-900 rounded-lg p-6 w-full max-w-md mx-4 transition-all duration-200 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
@@ -72,7 +76,7 @@ const SearchModal = ({ onClose }: { onClose: () => void }) => {
         )}
 
         {!isLoading && shouldShowResults && (
-          <div className="mt-4 space-y-3 max-h-54 overflow-y-auto p-2 rounded-lg bg-zinc-950">
+          <div className="mt-4 space-y-3 max-h-54 overflow-y-auto p-2 rounded-lg bg-zinc-950 no-scrollbar">
             {users.map((user: SearchedUser) => (
               <div
                 key={user._id}

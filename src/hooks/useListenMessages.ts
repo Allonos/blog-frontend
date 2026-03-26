@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import type { InfiniteData } from "@tanstack/react-query";
 import { useSocketStore } from "@/src/store/useSocketStore";
-import type { MessageType } from "@/src/utils/types/messageTypes";
+import type { MessageType, MessagePageResponse } from "@/src/utils/types/messageTypes";
 
 export const useListenMessages = (userId: string) => {
   const { socket } = useSocketStore();
@@ -15,7 +16,17 @@ export const useListenMessages = (userId: string) => {
 
       queryClient.setQueryData(
         ["get-users-chat-messages", userId],
-        (prev: MessageType[] = []) => [...prev, message],
+        (prev: InfiniteData<MessagePageResponse> | undefined) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            pages: prev.pages.map((page, index) =>
+              index === 0
+                ? { ...page, messages: [...page.messages, message] }
+                : page
+            ),
+          };
+        },
       );
     };
 

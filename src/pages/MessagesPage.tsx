@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { Loader2, MessageCircle } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ChatLayout from "@/src/components/ui/layout/ChatLayout";
@@ -18,22 +18,62 @@ const MessagesPage = () => {
   const { userId } = useParams();
   const { authUser } = useAuthStore();
   const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const prevScrollHeightRef = useRef(0);
+  const pageCountRef = useRef(0);
 
   useListenMessages(userId || "");
 
-  const { data: messages, isLoading } = useGetUsersChatMessageQuery({
+  const {
+    data: messages,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetUsersChatMessageQuery({
     id: userId || "",
   });
 
-  const { data: users, isLoading: isUsersLoading } =
-    useAllUsersChatServiceQuery();
+  const {
+    data: users,
+    isLoading: isUsersLoading,
+  } = useAllUsersChatServiceQuery();
 
   const otherUser = !isUsersLoading &&
-    users?.find((user: checkUserTypes) => user._id === userId);
+    users?.pages?.flatMap((page) => page.users)?.find((user: checkUserTypes) =>
+      user._id === userId
+    );
 
   useEffect(() => {
+    const currentPageCount = messages?.pages?.length ?? 0;
+
+    if (
+      currentPageCount > 1 &&
+      currentPageCount > pageCountRef.current &&
+      prevScrollHeightRef.current
+    ) {
+      const container = scrollContainerRef.current;
+      if (container) {
+        container.scrollTop = container.scrollHeight -
+          prevScrollHeightRef.current;
+        prevScrollHeightRef.current = 0;
+      }
+      pageCountRef.current = currentPageCount;
+      return;
+    }
+
+    pageCountRef.current = currentPageCount;
     bottomRef.current?.scrollIntoView();
   }, [messages, userId]);
+
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (!container || !hasNextPage || isFetchingNextPage) return;
+    if (container.scrollTop === 0) {
+      prevScrollHeightRef.current = container.scrollHeight;
+      fetchNextPage();
+    }
+  };
 
   if (isLoading) {
     return <MessageBubblesSkeleton />;
@@ -44,7 +84,7 @@ const MessagesPage = () => {
       <div className="flex h-full">
         <div
           className={userId
-            ? "hidden md:block md:max-w-75"
+            ? "hidden md:block md:min-w-75"
             : "w-full md:max-w-75"}
         >
           <ChatSidebar />
@@ -57,8 +97,21 @@ const MessagesPage = () => {
                 recieverImg={otherUser?.profilePic}
                 recieverUsername={otherUser?.username}
               />
-              <div className="flex-1 overflow-y-auto">
-                {messages?.map((message: MessageType) => (
+              <div
+                ref={scrollContainerRef}
+                onScroll={handleScroll}
+                className="flex-1 overflow-y-auto"
+              >
+                {isFetchingNextPage && (
+                  <div className="flex justify-center py-3">
+                    <Loader2 size={18} className="animate-spin text-zinc-400" />
+                  </div>
+                )}
+                {messages?.pages?.slice().reverse().flatMap((page) =>
+                  page.messages
+                )?.map((
+                  message: MessageType,
+                ) => (
                   <MessageBubble
                     key={message._id}
                     message={message}
@@ -68,7 +121,7 @@ const MessagesPage = () => {
                       : otherUser?.profilePic ?? ""}
                   />
                 ))}
-                {messages.length === 0 && (
+                {messages?.pages?.[0]?.messages?.length === 0 && (
                   <div className="flex flex-col h-full items-center justify-center gap-3 mt-10">
                     <MessageCircle size={48} className="text-zinc-500" />
                     <p className="text-lg font-semibold text-zinc-300">

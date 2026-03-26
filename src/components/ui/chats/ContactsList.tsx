@@ -3,19 +3,48 @@ import { useGetUsersContactsServiceQuery } from "@/src/services/react-query/chat
 import type { checkUserTypes } from "@/src/utils/types/checkUserTypes";
 import ChatSkeletons from "@/src/components/ui/skeletons/ChatSkeleton";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const ContactsList = () => {
-  const { data: contacts, isLoading } = useGetUsersContactsServiceQuery();
+  const {
+    data: contacts,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetUsersContactsServiceQuery();
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isLoading) {
     return <ChatSkeletons />;
   }
 
-  const lastItem = contacts.length - 1;
+  const allContacts = contacts?.pages?.flatMap((page) => page.users) ?? [];
+  const lastItem = allContacts.length - 1;
 
   return (
     <>
-      {contacts.map((contact: checkUserTypes, index: number) => (
+      {allContacts.map((
+        contact: checkUserTypes,
+        index: number,
+      ) => (
         <Link
           to={`/messages/${contact._id}`}
           key={contact._id}
@@ -31,11 +60,13 @@ const ContactsList = () => {
           <h3>{contact.username}</h3>
         </Link>
       ))}
-      {contacts.length === 0 && (
+      {allContacts.length === 0 && (
         <div className="py-4 px-6 text-center text-zinc-500">
           <h3>No contacts yet.</h3>
         </div>
       )}
+      <div ref={sentinelRef} />
+      {isFetchingNextPage && <ChatSkeletons />}
     </>
   );
 };

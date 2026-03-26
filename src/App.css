@@ -4,3 +4,14 @@ body {
   color: #ffffff;
   scroll-behavior: smooth;
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge, Opera */
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

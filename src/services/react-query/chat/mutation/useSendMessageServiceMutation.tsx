@@ -1,6 +1,10 @@
 import { sendMessage } from "@/src/services/apiServices/sendMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { MessageType } from "@/src/utils/types/messageTypes";
+import type { InfiniteData } from "@tanstack/react-query";
+import type {
+  MessagePageResponse,
+  MessageType,
+} from "@/src/utils/types/messageTypes";
 
 interface IProps {
   id: string;
@@ -17,7 +21,17 @@ export const useSendMessageServiceMutation = () => {
     onSuccess: (newMessage: MessageType, { id }) => {
       queryClient.setQueryData(
         ["get-users-chat-messages", id],
-        (prev: MessageType[] = []) => [...prev, newMessage],
+        (prev: InfiniteData<MessagePageResponse> | undefined) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            pages: prev.pages.map((page, index) =>
+              index === 0
+                ? { ...page, messages: [...page.messages, newMessage] }
+                : page
+            ),
+          };
+        },
       );
     },
   });
