@@ -15,19 +15,18 @@ import MessagesPage from "@/src/pages/MessagesPage";
 
 function App() {
   const { data: checkAuth, isLoading } = useGetCheckAuthServiceQuery();
-  const { setAuthUser, setToken } = useAuthStore();
+  const { setAuthUser } = useAuthStore();
   const { connectSocket, disconnectSocket } = useSocketStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setAuthUser(checkAuth ?? null);
-    setToken(checkAuth?.token ?? null);
     if (checkAuth) {
       connectSocket();
     } else {
       disconnectSocket();
     }
-  }, [checkAuth, setAuthUser, setToken, connectSocket, disconnectSocket]);
+  }, [checkAuth, setAuthUser, connectSocket, disconnectSocket]);
 
   useEffect(() => {
     if (searchParams.get("error") === "google_auth_failed") {

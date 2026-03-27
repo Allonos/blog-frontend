@@ -7,5 +7,4 @@ export interface checkUserTypes {
   profilePic: string;
   __v: number;
   _id: string;
-  token: string;
 }

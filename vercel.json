@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://blog-express-f5ds.onrender.com/api/:path*"
-    }
-  ]
-}

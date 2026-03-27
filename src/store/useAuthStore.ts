@@ -10,19 +10,15 @@ export interface IAuthUser {
 
 interface IProps {
   authUser: IAuthUser | null;
-  token: string | null;
   isSigningUp: boolean;
   isLoggingIn: boolean;
   setAuthUser: (user: IAuthUser | null) => void;
-  setToken: (token: string | null) => void;
 }
 
 export const useAuthStore = create<IProps>((set) => ({
   authUser: null,
-  token: null,
   isSigningUp: false,
   isLoggingIn: false,
 
   setAuthUser: (user) => set({ authUser: user }),
-  setToken: (token) => set({ token }),
 }));

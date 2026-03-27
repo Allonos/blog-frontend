@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { io, Socket } from "socket.io-client";
-import { useAuthStore } from "./useAuthStore";
 
 interface SocketStore {
   socket: Socket | null;
@@ -12,10 +11,8 @@ export const useSocketStore = create<SocketStore>((set, get) => ({
   socket: null,
   connectSocket: () => {
     if (get().socket?.connected) return;
-    const token = useAuthStore.getState().token;
-    const socket = io(import.meta.env.VITE_SOCKET_URL, {
+    const socket = io(import.meta.env.VITE_API_BASE_URL, {
       withCredentials: true,
-      auth: { token },
     });
     set({ socket });
   },
