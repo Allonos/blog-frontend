@@ -11,7 +11,7 @@ export const useSocketStore = create<SocketStore>((set, get) => ({
   socket: null,
   connectSocket: () => {
     if (get().socket?.connected) return;
-    const socket = io("http://localhost:8080", {
+    const socket = io(import.meta.env.VITE_API_BASE_URL, {
       withCredentials: true,
     });
     set({ socket });
