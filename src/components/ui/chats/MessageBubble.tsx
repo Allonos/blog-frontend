@@ -1,4 +1,4 @@
-import defaultImage from "@/public/assets/jpg/avatar.jpg";
+import defaultImage from "@/src/assets/jpg/avatar.jpg";
 import type { MessageType } from "@/src/utils/types/messageTypes";
 import dayjs from "dayjs";
 

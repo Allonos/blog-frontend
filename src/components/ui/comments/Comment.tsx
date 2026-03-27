@@ -1,4 +1,4 @@
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 
 import type { commentType } from "@/src/utils/types/postTypes";
 import { useState } from "react";

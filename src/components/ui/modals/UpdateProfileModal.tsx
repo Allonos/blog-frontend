@@ -2,7 +2,7 @@ import { Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useUpdateProfileServiceMutation } from "@/src/services/react-query/updateProfile/mutation/useUpdateProfileServiceMutation";
 import { useAuthStore } from "@/src/store/useAuthStore";
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 
 interface IProps {
   isVisible: boolean;

@@ -2,7 +2,7 @@ import CommentReply from "@/src/components/ui/commentReply/CommentReply";
 import type { replyTypes } from "@/src/utils/types/Reply";
 import { useState } from "react";
 import { useReplyOnCommentServiceMutation } from "@/src/services/react-query/home/mutation/useReplyOnCommentServiceMutation";
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 import { useAuthStore } from "@/src/store/useAuthStore";
 import type { commentType } from "@/src/utils/types/postTypes";
 

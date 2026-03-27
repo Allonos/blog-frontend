@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
-import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
+import defaultAvatar from "@/src/assets/jpg/avatar.jpg";
 import UpdateProfileModal from "../modals/UpdateProfileModal";
 import { useAuthStore } from "@/src/store/useAuthStore";
 import { useNavigate } from "react-router-dom";

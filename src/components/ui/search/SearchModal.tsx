@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 import {
   type SearchedUser,
   useGetUserServiceQuery,

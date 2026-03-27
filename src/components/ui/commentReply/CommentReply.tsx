@@ -1,4 +1,4 @@
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 import type { replyTypes } from "@/src/utils/types/Reply";
 import dayjs from "dayjs";
 import { useState } from "react";

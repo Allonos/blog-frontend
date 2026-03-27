@@ -1,4 +1,4 @@
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 import { useDeletePostServiceMutation } from "@/src/services/react-query/usersPosts/query/useGetUserPostsServiceQuery";
 import { useAuthStore } from "@/src/store/useAuthStore";
 

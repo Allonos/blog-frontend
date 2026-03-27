@@ -36,9 +36,9 @@ const MessagesPage = () => {
   } = useAllUsersChatServiceQuery();
 
   const otherUser = !isUsersLoading
-    ? users?.pages?.flatMap((page) => page.users)?.find((user: checkUserTypes) =>
-      user._id === userId
-    )
+    ? users?.pages?.flatMap((page) => page.users)?.find((
+      user: checkUserTypes,
+    ) => user._id === userId)
     : undefined;
 
   useEffect(() => {
@@ -72,10 +72,6 @@ const MessagesPage = () => {
     }
   };
 
-  if (isLoading) {
-    return <MessageBubblesSkeleton />;
-  }
-
   return (
     <ChatLayout>
       <div className="flex h-full">
@@ -86,15 +82,18 @@ const MessagesPage = () => {
         >
           <ChatSidebar />
         </div>
-        <Chat
-          userId={userId || ""}
-          otherUser={otherUser}
-          messages={messages}
-          isFetchingNextPage={isFetchingNextPage}
-          scrollContainerRef={scrollContainerRef}
-          bottomRef={bottomRef}
-          handleScroll={handleScroll}
-        />
+        {!isLoading && (
+          <Chat
+            userId={userId || ""}
+            otherUser={otherUser}
+            messages={messages}
+            isFetchingNextPage={isFetchingNextPage}
+            scrollContainerRef={scrollContainerRef}
+            bottomRef={bottomRef}
+            handleScroll={handleScroll}
+          />
+        )}
+        {isLoading && <MessageBubblesSkeleton />}
       </div>
     </ChatLayout>
   );

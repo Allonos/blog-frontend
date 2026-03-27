@@ -1,4 +1,4 @@
-import defaultImage from "@/public/assets/jpg/avatar.jpg";
+import defaultImage from "@/src/assets/jpg/avatar.jpg";
 import { useGetUsersContactsServiceQuery } from "@/src/services/react-query/chat/query/useUserContactsServiceQuery";
 import type { checkUserTypes } from "@/src/utils/types/checkUserTypes";
 import ChatSkeletons from "@/src/components/ui/skeletons/ChatSkeleton";

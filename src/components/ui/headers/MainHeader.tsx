@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetCheckAuthServiceQuery } from "@/src/services/react-query/checkAuth/query/useGetCheckAuthServiceQuery";
 import { LogOutIcon, MessagesSquare, Search, SquarePen } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
+import defaultAvatar from "@/src/assets/jpg/avatar.jpg";
 import { useLogoutServiceMutation } from "@/src/services/react-query/logout/mutation/useLogoutServiceMutation";
 import SearchModal from "../search/SearchModal";
 

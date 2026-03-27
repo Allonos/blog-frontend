@@ -1,4 +1,4 @@
-import defaultAvatar from "@/public/assets/jpg/avatar.jpg";
+import defaultAvatar from "@/src/assets/jpg/avatar.jpg";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 

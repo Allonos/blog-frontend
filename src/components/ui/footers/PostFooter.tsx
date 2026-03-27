@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/src/store/useAuthStore";
 
-import defaultProfilePic from "@/public/assets/jpg/avatar.jpg";
+import defaultProfilePic from "@/src/assets/jpg/avatar.jpg";
 import { useCommentOnPostServiceMutation } from "@/src/services/react-query/home/mutation/useCommentOnPostServiceMutation";
 import { useState } from "react";
 
