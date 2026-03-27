@@ -1,6 +1,3 @@
-import ChatLayout from "@/src/components/ui/layout/ChatLayout";
-import ChatSidebar from "@/src/components/ui/sidebar/ChatSidebar";
-
 const MessageBubbleSkeleton = ({ isMyMessage }: { isMyMessage?: boolean }) => {
   return (
     <div
@@ -34,24 +31,11 @@ const MessageBubbleSkeleton = ({ isMyMessage }: { isMyMessage?: boolean }) => {
 
 const MessageBubblesSkeleton = () => {
   return (
-    <ChatLayout>
-      <div className="flex h-full">
-        <div className="hidden md:block">
-          <ChatSidebar />
-        </div>
-
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <MessageBubbleSkeleton
-                key={i}
-                isMyMessage={i % 2 === 0}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </ChatLayout>
+    <div className="flex-1 overflow-y-auto">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <MessageBubbleSkeleton key={i} isMyMessage={i % 2 === 0} />
+      ))}
+    </div>
   );
 };
 
