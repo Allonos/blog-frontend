@@ -77,7 +77,7 @@ const SignupForm = ({ onSubmit, formData, onChange, isPending }: IProps) => {
         </div>
 
         <a
-          href="http://localhost:8080/api/auth/google"
+          href={`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`}
           className="flex items-center justify-center gap-2 w-full mb-4 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-[14px] transition-colors duration-200"
         >
           <svg
