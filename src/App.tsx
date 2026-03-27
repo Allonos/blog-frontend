@@ -38,7 +38,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-[18px] text-[#71717B]">Loading...</p>
+        <p className="text-[18px] text-[#71717B] animate-pulse">Loading...</p>
       </div>
     );
   }
