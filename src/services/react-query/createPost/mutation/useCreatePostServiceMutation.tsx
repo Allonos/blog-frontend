@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 interface IProps {
   id: string;
   description: string;
-  image?: string | null;
+  image?: File | null;
 }
 
 export const useCreatePostServiceMutation = () => {

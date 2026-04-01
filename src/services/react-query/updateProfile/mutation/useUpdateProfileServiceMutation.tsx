@@ -2,7 +2,7 @@ import { updateProfile } from "@/src/services/apiServices/updateProfile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IUpdateProfileData {
-  profilePic?: string;
+  profilePic?: File;
   username?: string;
   bio?: string;
 }

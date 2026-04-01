@@ -3,15 +3,16 @@ import api from "@/src/services/api/api";
 interface IProps {
   id: string;
   description: string;
-  image?: string | null;
+  image?: File | null;
 }
 
-export const createPost = async ({ id, description, image }: IProps) => {
-  const response = await api.post("/post/create", {
-    id,
-    description,
-    ...(image && { image }),
-  });
+export const createPost = async ({ description, image }: IProps) => {
+  const formData = new FormData();
+  formData.append("description", description);
+  if (image) {
+    formData.append("image", image);
+  }
 
+  const response = await api.post("/post/create", formData);
   return response.data;
 };

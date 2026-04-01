@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const CreatePage = () => {
-  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [description, setDescription] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { authUser } = useAuthStore();
@@ -19,12 +20,8 @@ const CreatePage = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setSelectedImg(reader.result as string);
-    };
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
   const createPostHandler = () => {
@@ -34,12 +31,14 @@ const CreatePage = () => {
       {
         id: authUser?._id || "",
         description,
-        image: selectedImg ?? undefined,
+        image: selectedFile ?? undefined,
       },
       {
         onSuccess: () => {
           setDescription("");
-          setSelectedImg(null);
+          setSelectedFile(null);
+          if (previewUrl) URL.revokeObjectURL(previewUrl);
+          setPreviewUrl(null);
           if (fileInputRef.current) fileInputRef.current.value = "";
           toast.success("Post created successfully!");
           navigate("/");
@@ -50,7 +49,9 @@ const CreatePage = () => {
 
   const handleRemoveImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setSelectedImg(null);
+    setSelectedFile(null);
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -77,16 +78,16 @@ const CreatePage = () => {
           <div className="relative mt-4">
             <div
               className={`w-full ${
-                selectedImg ? "max-h-100" : "h-40"
+                previewUrl ? "max-h-100" : "h-40"
               } bg-zinc-800 rounded-md border-2 border-dashed border-zinc-700 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-zinc-500 hover:bg-zinc-700/50 transition-colors overflow-hidden ${
                 isPending ? "pointer-events-none opacity-50" : ""
               }`}
               onClick={() => fileInputRef.current?.click()}
             >
-              {selectedImg
+              {previewUrl
                 ? (
                   <img
-                    src={selectedImg}
+                    src={previewUrl}
                     alt="Selected"
                     className="w-full h-full object-cover"
                   />
@@ -101,7 +102,7 @@ const CreatePage = () => {
                 )}
             </div>
 
-            {selectedImg && !isPending && (
+            {previewUrl && !isPending && (
               <button
                 className="absolute top-2 right-2 bg-red-600 hover:bg-red-500 rounded-full p-2 cursor-pointer transition-colors"
                 onClick={handleRemoveImage}

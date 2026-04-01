@@ -22,9 +22,8 @@ const UpdateProfileModal = ({
   profilePic,
 }: IProps) => {
   const [formData, setFormData] = useState({ username, bio });
-  const [selectedImg, setSelectedImg] = useState<string>(
-    profilePic,
-  );
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>(profilePic);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -33,6 +32,7 @@ const UpdateProfileModal = ({
     useUpdateProfileServiceMutation();
 
   const closeModal = () => {
+    if (selectedFile) URL.revokeObjectURL(previewUrl);
     setIsVisible(false);
     setTimeout(() => setIsModalOpen(false), 200);
   };
@@ -40,14 +40,9 @@ const UpdateProfileModal = ({
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = async () => {
-      const base64Image = reader.result as string;
-      setSelectedImg(base64Image);
-    };
+    if (selectedFile) URL.revokeObjectURL(previewUrl);
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
   const handleSave = () => {
@@ -58,7 +53,7 @@ const UpdateProfileModal = ({
         data: {
           username: formData.username,
           bio: formData.bio,
-          profilePic: selectedImg,
+          profilePic: selectedFile ?? undefined,
         },
       },
       { onSuccess: closeModal },
@@ -95,7 +90,7 @@ const UpdateProfileModal = ({
             onClick={() => fileInputRef.current?.click()}
           >
             <img
-              src={selectedImg || defaultProfilePic}
+              src={previewUrl || defaultProfilePic}
               className="w-20 h-20 rounded-full object-cover border-2 border-zinc-700"
             />
             <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">

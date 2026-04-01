@@ -19,6 +19,8 @@ const ProfilePage = () => {
   const posts = data?.pages.flatMap((page) => page.posts) ?? [];
   const userMeta = data?.pages[0];
 
+  console.log(userMeta);
+
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
